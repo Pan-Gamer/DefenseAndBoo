@@ -8,6 +8,7 @@ public enum Skill
 	DEFEND
 
 }
+//玩家信息
 struct PlayerInfos
 {
 	private bool m_isDesd;
@@ -54,6 +55,7 @@ public class Player {
 		m_playerInfo.Init ();
 		m_currentSkill = Skill.DEFEND;
 	}
+    //对比技能
 	public void CompareSkill(Skill enemySkill) {
 		int changeLife = 0;
 		int changeSkillLevel = 0;

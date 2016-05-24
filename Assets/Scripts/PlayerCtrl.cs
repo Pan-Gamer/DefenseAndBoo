@@ -30,18 +30,24 @@ public class PlayerCtrl : MonoBehaviour {
 	void Update () {
 	
 	}
+    //按钮函数
+    //直接拖到按钮UI下，点击按钮触发相应函数
+    //--------------------------------------------------------------------
+    //防
 	public void PlayerDefend()
 	{
 		m_player.currentSkill = Skill.DEFEND;
 		m_state = PLAYERSTATE.WAITING;
 		ForbidButton ();
 	}
+    //攒
 	public void PlayerState()
 	{
 		m_player.currentSkill = Skill.STATE;
 		m_state = PLAYERSTATE.WAITING;
 		ForbidButton ();
 	}
+    //波
 	public void PlayerBoo()
 	{
 		m_player.currentSkill = Skill.BOO;
@@ -60,6 +66,7 @@ public class PlayerCtrl : MonoBehaviour {
 		m_state = PLAYERSTATE.WAITING;
 		ForbidButton ();
 	}
+    //玩家回合结束结算
 	public void EndRound(Skill enemySkill)
 	{
 		m_player.CompareSkill (enemySkill);
@@ -81,12 +88,15 @@ public class PlayerCtrl : MonoBehaviour {
 			print ("Button number less then 4");
 		UpdateButton ();
 	}
+    //----------------------------------------------------------------
+    //等待结算，按钮禁止
 	private void ForbidButton()
 	{
 		foreach (Button button in buttons) {
 			button.interactable = false;
 		}
 	}
+    //结算结算，更新按钮
 	private void UpdateButton()
 	{
 		int skillLevel = m_player.playerSkillLevel;
