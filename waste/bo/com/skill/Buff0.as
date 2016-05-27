@@ -9,6 +9,7 @@
 		
 		public function initTest():void
 		{
+			buffType="防";
 			name="防";
 		}
 	}

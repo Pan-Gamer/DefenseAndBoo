@@ -2,24 +2,25 @@
 {
 	import com.effect.*;
 	
-	public class Skill1 extends SkillBase
+	public class Skill2 extends SkillBase
 	{
-		public function Skill1()
+		public function Skill2()
 		{
 			initTest();
 		}
 		
 		public function initTest():void
 		{
-			name="波";
+			name="攒";
 			typeList=[];
-			cost=1;
+			cost=0;
 			
-			var tempEffect=new DamageEffect();
-			tempEffect.target=1;
-			tempEffect.isAttack=true;
+			var tempEffect=new GainManaEffect();
+			tempEffect.target=0;
+			tempEffect.isAttack=false;
 			tempEffect.isMagic=true;
 			tempEffect.isPhysics=false;
+			tempEffect.point=1;
 			effectList=[tempEffect];
 		}
 	}

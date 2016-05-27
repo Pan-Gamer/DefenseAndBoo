@@ -36,5 +36,18 @@
 			hp=hpDefault;
 			mp=mpDefault;
 		}
+		
+		public function containBuff(type:String):Boolean
+		{
+			for each(var tempBuff:BuffBase in buffList)
+			{
+				trace(tempBuff.type);
+				if(tempBuff.type==type)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
 	}
 }

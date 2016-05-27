@@ -1,5 +1,7 @@
 ﻿package com.effect
 {
+	import com.gameObject.*;
+	
 	public class EffectBase
 	{
 		private var effectType:String="EffectBase";
@@ -14,6 +16,11 @@
 		}
 		
 		public function EffectBase()
+		{
+			
+		}
+		
+		public function deal(target:PlayerBase,...args):void
 		{
 			
 		}

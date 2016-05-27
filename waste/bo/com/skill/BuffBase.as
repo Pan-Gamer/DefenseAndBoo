@@ -2,7 +2,7 @@
 {
 	public class BuffBase
 	{
-		private var buffType:String="BuffBase";
+		protected var buffType:String="BuffBase";
 		public var duration:int=0;
 		public var name:String="";
 		

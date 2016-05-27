@@ -1,6 +1,7 @@
 ﻿package com.system
 {
 	import com.gameObject.*;
+	import com.skill.*;
 	
 	public class BattleManager
 	{
@@ -9,9 +10,19 @@
 		public var currentAction0:ActionBase=null;
 		public var currentAction1:ActionBase=null;
 		
+		public var cb_refreshUI:Function=null;
+		
 		public function BattleManager()
 		{
 			
+		}
+		
+		public function addSkillToAction(i:int=0,skill:SkillBase=null):void
+		{
+			var action=new ActionBase();
+			action.currentSkill=skill;
+			action.host=i;
+			addAction(i,action);
 		}
 		
 		public function addAction(i:int=0,action:ActionBase=null):void
@@ -26,6 +37,11 @@
 					break;
 				default:
 					break;
+			}
+			if(null!=currentAction0 && null!=currentAction1)
+			{
+				deal();
+				endPhrase();
 			}
 		}
 		
@@ -99,16 +115,41 @@
 		
 		protected function dealAction(action:ActionBase):void
 		{
-			
+			var tempSkill:SkillBase=action.currentSkill;
+			var actoinHost:PlayerBase=action.host==0?player0:player1;
+			for(var i=0;i<tempSkill.effectList.length;i++)
+			{
+				var tempEffect=tempSkill.effectList[i];
+				if(tempEffect.isAttack)
+				{
+					continue;
+				}
+				var tempTarget:PlayerBase=(action.host^tempEffect.target)==0?player0:player1;//按位xor
+				tempEffect.deal(tempTarget);
+				refreshUI();
+			}
 		}
 		
-		protected function dealActionAttack(actoin:ActionBase):void
+		protected function dealActionAttack(action:ActionBase):void
 		{
-			/*
+			/*todo
 			先判断是否被康,
 			再判断是否被打康.
 			造成伤害.
 			*/
+			var tempSkill:SkillBase=action.currentSkill;
+			var actionHost:PlayerBase=action.host==0?player0:player1;
+			for(var i=0;i<tempSkill.effectList.length;i++)
+			{
+				var tempEffect=tempSkill.effectList[i];
+				if(!tempEffect.isAttack)
+				{
+					continue;
+				}
+				var tempTarget:PlayerBase=(action.host^tempEffect.target)==0?player0:player1;//按位xor
+				tempEffect.deal(tempTarget);
+				refreshUI();
+			}
 		}
 		
 		//状态检测.死亡等.
@@ -143,6 +184,28 @@
 		protected function getAttackPriority(a:ActionBase):int
 		{
 			return 0;
+		}
+		
+		public function startPhrase():void
+		{
+			//todo cd走一回合
+			refreshUI();
+		}
+		
+		public function endPhrase():void
+		{
+			currentAction0=null;
+			currentAction1=null;
+			//todo buff走一回合
+			refreshUI();
+		}
+		
+		protected function refreshUI():void
+		{
+			if(null!=cb_refreshUI)
+			{
+				cb_refreshUI();
+			}
 		}
 	}
 }
