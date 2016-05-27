@@ -26,7 +26,7 @@
 			hpMax=20;
 			mpDefault=0;
 			mpMax=10;
-			skillList=[new Skill0(),new Skill1(),new Skill2(),new Skill3(),new Skill4];
+			skillList=[new Skill0(),new Skill1(),new Skill2(),new Skill3(),new Skill4,new Skill5];
 			
 			init();
 		}
@@ -41,13 +41,24 @@
 		{
 			for each(var tempBuff:BuffBase in buffList)
 			{
-				trace(tempBuff.type);
 				if(tempBuff.type==type)
 				{
 					return true;
 				}
 			}
 			return false;
+		}
+		
+		public function buffFade():void
+		{
+			for(var i=buffList.length-1;i>=0;i--)
+			{
+				var tempBuff=buffList[i];
+				if(tempBuff.fade())
+				{
+					buffList.splice(i,1);
+				}
+			}
 		}
 	}
 }

@@ -1,7 +1,9 @@
 ﻿package com.effect
 {
 	import com.gameObject.*;
-	
+	/*
+	* 基础攻击
+	*/
 	public class DamageEffect extends EffectBase
 	{
 		private var effectType:String="DamageEffect";

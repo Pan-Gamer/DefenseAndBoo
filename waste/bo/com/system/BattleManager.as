@@ -11,6 +11,8 @@
 		public var currentAction1:ActionBase=null;
 		
 		public var cb_refreshUI:Function=null;
+		public var cb_log:Function=null;
+		private var turnCount:int=1;
 		
 		public function BattleManager()
 		{
@@ -22,7 +24,14 @@
 			var action=new ActionBase();
 			action.currentSkill=skill;
 			action.host=i;
-			addAction(i,action);
+			if(costTest(i,skill))
+			{
+				addAction(i,action);
+			}
+			else
+			{
+				//我们需要更多法力值
+			}
 		}
 		
 		public function addAction(i:int=0,action:ActionBase=null):void
@@ -40,6 +49,8 @@
 			}
 			if(null!=currentAction0 && null!=currentAction1)
 			{
+				traceLog(0,"使用了"+currentAction0.currentSkill.name);
+				traceLog(1,"使用了"+currentAction1.currentSkill.name);
 				deal();
 				endPhrase();
 			}
@@ -159,18 +170,20 @@
 			{
 				if(player1.hp<=0)
 				{
-					//同归于尽
+					traceLog(-1,"同归于尽");
 					return true;
 				}
 				else
 				{
-					//player1获胜
+					traceLog(0,"失败");
+					traceLog(1,"胜利");
 					return true;
 				}
 			}
 			else if(player1.hp<=0)
 			{
-				//player0获胜
+				traceLog(0,"胜利");
+				traceLog(1,"失败");
 				return true;
 			}
 			return false;
@@ -196,7 +209,10 @@
 		{
 			currentAction0=null;
 			currentAction1=null;
-			//todo buff走一回合
+			traceLog(-1,"  第"+turnCount+"回合结束");
+			turnCount++;
+			player0.buffFade();
+			player1.buffFade();
 			refreshUI();
 		}
 		
@@ -206,6 +222,32 @@
 			{
 				cb_refreshUI();
 			}
+		}
+		
+		protected function traceLog(i:int=-1,s:String=""):void
+		{
+			if(null!=cb_log)
+			{
+				if(i!=-1)
+				{
+					cb_log(i,s);
+				}
+				else
+				{
+					cb_log(0,s);
+					cb_log(1,s);
+				}
+			}
+		}
+		
+		public function costTest(i:int,s:SkillBase):Boolean
+		{
+			var tempPlayer:PlayerBase=i==0?player0:player1;
+			if(tempPlayer.mp>=s.cost)
+			{
+				return true;
+			}
+			return false;
 		}
 	}
 }

@@ -10,5 +10,23 @@
 		{
 			return buffType;
 		}
+		
+		public function fade():Boolean
+		{
+			if(duration!=-1)
+			{
+				if(duration==0)
+				{
+					//error
+					return false;
+				}
+				duration--;
+				if(duration==0)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
 	}
 }
