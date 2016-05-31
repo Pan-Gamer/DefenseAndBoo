@@ -11,7 +11,6 @@
 		public var isMagic:Boolean=false;
 		public var isPhysics:Boolean=false;
 		public var attackSpeed:int=0;
-		public var speed:int=0;
 		
 		public function get type():String
 		{

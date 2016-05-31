@@ -27,9 +27,12 @@
 			tempEffect.isMagic=false;
 			tempEffect.isPhysics=true;
 			tempEffect.point=6;
+			tempEffect.attackSpeed=2;
 			var tempEffect2=new SingleEffect();
 			tempEffect2.type="破防";
-			effectList=[tempEffect0,tempEffect,tempEffect2];
+			var tempEffect3=new SingleEffect();
+			tempEffect3.type="前摇";
+			effectList=[tempEffect0,tempEffect,tempEffect2,tempEffect3];
 		}
 	}
 }

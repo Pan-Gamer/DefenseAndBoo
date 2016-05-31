@@ -28,7 +28,7 @@
 			hpMax=20;
 			mpDefault=0;
 			mpMax=10;
-			skillList=[new Skill0(),new Skill1(),new Skill2(),new Skill3(),new Skill4(),new Skill5(),new Skill6(),new Skill7(),new Skill8()];
+			skillList=[new Skill0(),new Skill1(),new Skill2(),new Skill3(),new Skill4(),new Skill5(),new Skill6(),new Skill7(),new Skill10(),new Skill11()];
 			
 			init();
 		}

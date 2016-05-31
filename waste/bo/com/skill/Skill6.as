@@ -29,8 +29,7 @@
 			tempEffect.isMagic=false;
 			tempEffect.isPhysics=true;
 			tempEffect.point=2;
-			var tempEffect2=new SingleEffect();
-			tempEffect2.type="蓄力";
+			tempEffect.attackSpeed=0;
 			var tempEffect3=new SingleEffect();
 			tempEffect3.type="前摇";
 			var tempEffect4=new AddBuffEffect();
@@ -38,7 +37,7 @@
 			tempEffect4.isAttack=false;
 			tempEffect4.buffType="魔免";
 			tempEffect4.buffDuration=1;
-			effectList=[tempEffect0,tempEffect,tempEffect2,tempEffect3,tempEffect4];
+			effectList=[tempEffect0,tempEffect,tempEffect3,tempEffect4];
 		}
 	}
 }

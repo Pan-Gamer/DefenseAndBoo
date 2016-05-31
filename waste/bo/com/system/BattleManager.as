@@ -102,9 +102,14 @@
 			//todo 要处理连击,得把4个速度都过一遍.
 			for(var i=4;i>=0;i--)
 			{
-				
+				dealActionAttack(currentAction0,i);
+				dealActionAttack(currentAction1,i);
+				if(stateTest())
+				{
+					return;
+				}
 			}
-			if(p0>p1)
+			/*if(p0>p1)
 			{
 				dealActionAttack(currentAction0);
 				if(stateTest())
@@ -126,11 +131,11 @@
 			{
 				dealActionAttack(currentAction0);
 				dealActionAttack(currentAction1);
-			}
-			if(stateTest())
+			}*/
+			/*if(stateTest())
 			{
 				return;
-			}
+			}*/
 		}
 		
 		protected function dealAction(action:ActionBase):void
@@ -150,7 +155,7 @@
 			}
 		}
 		
-		protected function dealActionAttack(action:ActionBase):void
+		protected function dealActionAttack(action:ActionBase,attackSpeed:int=0):void
 		{
 			var attackSuccess:Boolean=true;
 			/*todo
@@ -158,7 +163,8 @@
 			*/
 			var tempSkill:SkillBase=action.currentSkill;
 			var actionHost:PlayerBase=action.host==0?player0:player1;
-			if(action.containEffect("前摇")&&(actionHost.hasAttacked || action.hasAttackCountered))
+			//if(action.containEffect("前摇")&&(actionHost.hasAttacked || action.hasAttackCountered))
+			if(action.hasAttackCountered)//玩家被命中直接记录为.hasAttacked,在一次stateTest结算后才判定hasAttackCountered
 			{
 				attackSuccess=false;
 				traceLog(action.host,"被打康");
@@ -168,7 +174,7 @@
 				for(var i=0;i<tempSkill.effectList.length;i++)
 				{
 					var tempEffect=tempSkill.effectList[i];
-					if(!tempEffect.isAttack)
+					if(!tempEffect.isAttack || tempEffect.attackSpeed!=attackSpeed)
 					{
 						continue;
 					}
@@ -182,6 +188,22 @@
 		//状态检测.死亡等.
 		protected function stateTest():Boolean
 		{
+			//player.hasAttacked到action.hasAttackCountered的转化
+			if(player0.hasAttacked && !currentAction0.hasAttackCountered)
+			{
+				if(currentAction0.containEffect("前摇"))
+				{
+					currentAction0.hasAttackCountered=true;
+				}
+			}
+			if(player1.hasAttacked && !currentAction1.hasAttackCountered)
+			{
+				if(currentAction1.containEffect("前摇"))
+				{
+					currentAction1.hasAttackCountered=true;
+				}
+			}
+			//死亡判定
 			if(player0.hp<=0)
 			{
 				if(player1.hp<=0)

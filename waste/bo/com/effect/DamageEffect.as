@@ -26,7 +26,7 @@
 			}
 			if(isPhysics)
 			{
-				if(target.containBuff("闪") || (target.containBuff("防")&&(!action.containEffect("破防"))))
+				if(target.containBuff("闪")&&(!action.containEffect("必中")) || (target.containBuff("防")&&(!action.containEffect("破防"))))
 				{
 					//被闪避
 					attackSuccess=false;

@@ -27,6 +27,7 @@
 			tempEffect.isMagic=false;
 			tempEffect.isPhysics=true;
 			tempEffect.point=1;
+			tempEffect.attackSpeed=1;
 			var tempEffect2=new SingleEffect();
 			tempEffect2.type="缓攻";
 			var tempEffect3=new SingleEffect();

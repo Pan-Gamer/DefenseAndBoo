@@ -27,6 +27,7 @@
 			tempEffect.isMagic=false;
 			tempEffect.isPhysics=true;
 			tempEffect.point=2;
+			tempEffect.attackSpeed=2;
 			var tempEffect3=new RemoveBuffEffect();
 			tempEffect3.target=0;
 			tempEffect3.isAttack=false;

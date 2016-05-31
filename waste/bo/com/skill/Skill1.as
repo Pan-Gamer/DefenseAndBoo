@@ -27,6 +27,7 @@
 			tempEffect.isMagic=true;
 			tempEffect.isPhysics=false;
 			tempEffect.point=1;
+			tempEffect.attackSpeed=2;
 			effectList=[tempEffect0,tempEffect];
 		}
 	}
