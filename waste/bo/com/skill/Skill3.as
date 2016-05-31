@@ -20,7 +20,7 @@
 			tempEffect.isAttack=false;
 			tempEffect.isMagic=false;
 			tempEffect.isPhysics=true;
-			tempEffect.buffType=0;
+			tempEffect.buffType="防";
 			tempEffect.buffDuration=1;
 			effectList=[tempEffect];
 		}

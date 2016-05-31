@@ -19,18 +19,21 @@
 			
 		}
 		
-		public function addSkillToAction(i:int=0,skill:SkillBase=null):void
+		public function addSkillToAction(i:int=0,skill:SkillBase=null):Boolean
 		{
 			var action=new ActionBase();
+			action.host=i; 
+			action.hostPlayer=i==0?player0:player1;
 			action.currentSkill=skill;
-			action.host=i;
-			if(costTest(i,skill))
+			if(costTest(i,action.currentSkill))//这里必须用action.currentSkill
 			{
 				addAction(i,action);
+				return true;
 			}
 			else
 			{
-				//我们需要更多法力值
+				traceLog(i,"我们需要更多法力值-_-");
+				return false;
 			}
 		}
 		
@@ -127,7 +130,7 @@
 		protected function dealAction(action:ActionBase):void
 		{
 			var tempSkill:SkillBase=action.currentSkill;
-			var actoinHost:PlayerBase=action.host==0?player0:player1;
+			var actionHost:PlayerBase=action.host==0?player0:player1;
 			for(var i=0;i<tempSkill.effectList.length;i++)
 			{
 				var tempEffect=tempSkill.effectList[i];
@@ -136,30 +139,37 @@
 					continue;
 				}
 				var tempTarget:PlayerBase=(action.host^tempEffect.target)==0?player0:player1;//按位xor
-				tempEffect.deal(tempTarget);
+				tempEffect.deal(tempTarget,action);
 				refreshUI();
 			}
 		}
 		
 		protected function dealActionAttack(action:ActionBase):void
 		{
+			var attackSuccess:Boolean=true;
 			/*todo
 			先判断是否被康,
-			再判断是否被打康.
-			造成伤害.
 			*/
 			var tempSkill:SkillBase=action.currentSkill;
 			var actionHost:PlayerBase=action.host==0?player0:player1;
-			for(var i=0;i<tempSkill.effectList.length;i++)
+			if(action.containEffect("前摇")&&(actionHost.hasAttacked || action.hasAttackCountered))
 			{
-				var tempEffect=tempSkill.effectList[i];
-				if(!tempEffect.isAttack)
+				attackSuccess=false;
+				traceLog(action.host,"被打康");
+			}
+			if(attackSuccess)
+			{
+				for(var i=0;i<tempSkill.effectList.length;i++)
 				{
-					continue;
+					var tempEffect=tempSkill.effectList[i];
+					if(!tempEffect.isAttack)
+					{
+						continue;
+					}
+					var tempTarget:PlayerBase=(action.host^tempEffect.target)==0?player0:player1;//按位xor
+					tempEffect.deal(tempTarget,action);
+					refreshUI();
 				}
-				var tempTarget:PlayerBase=(action.host^tempEffect.target)==0?player0:player1;//按位xor
-				tempEffect.deal(tempTarget);
-				refreshUI();
 			}
 		}
 		
@@ -191,12 +201,33 @@
 		
 		protected function getPriority(a:ActionBase):int
 		{
+			if(a.containEffect("转瞬"))
+			{
+				return 2;
+			}
+			if(a.containEffect("瞬间"))
+			{
+				return 1;
+			}
 			return 0;
 		}
 		
 		protected function getAttackPriority(a:ActionBase):int
 		{
-			return 0;
+			
+			if(a.containEffect("先攻"))
+			{
+				return 3;
+			}
+			if(a.containEffect("缓攻"))
+			{
+				return 1;
+			}
+			if(a.containEffect("蓄力"))
+			{
+				return 0;
+			}
+			return 2;
 		}
 		
 		public function startPhrase():void
@@ -213,14 +244,16 @@
 			turnCount++;
 			player0.buffFade();
 			player1.buffFade();
-			refreshUI();
+			player0.hasAttacked=false;
+			player1.hasAttacked=false;
+			refreshUI("endTurn");
 		}
 		
-		protected function refreshUI():void
+		protected function refreshUI(code:String=""):void
 		{
 			if(null!=cb_refreshUI)
 			{
-				cb_refreshUI();
+				cb_refreshUI(code);
 			}
 		}
 		

@@ -2,42 +2,42 @@
 {
 	import com.effect.*;
 	
-	public class Skill5 extends SkillBase
+	public class Skill7_0 extends SkillBase
 	{
-		public function Skill5()
+		public function Skill7_0()
 		{
 			initTest();
 		}
 		
 		public function initTest():void
 		{
-			name="恶魂凭依";
+			name="生死流转0";
 			typeList=[];
-			cost=3;
+			cost=2;
 			
 			var tempEffect0=new CostEffect();
 			tempEffect0.target=0;
 			tempEffect0.isAttack=false;
 			tempEffect0.isMagic=false;
 			tempEffect0.isPhysics=false;
-			tempEffect0.point=3;
+			tempEffect0.point=2;
 			var tempEffect=new DamageEffect();
 			tempEffect.target=1;
 			tempEffect.isAttack=true;
-			tempEffect.isMagic=true;
-			tempEffect.isPhysics=false;
+			tempEffect.isMagic=false;
+			tempEffect.isPhysics=true;
 			tempEffect.point=1;
 			var tempEffect2=new SingleEffect();
 			tempEffect2.type="缓攻";
-			var tempEffect3=new SingleEffect();
-			tempEffect3.type="前摇";
-			var tempEffect4=new GhostEffect();
-			tempEffect4.target=1;
-			tempEffect4.hpPoint=2;
-			tempEffect4.mpPoint=0;
-			tempEffect4.isAttack=true;
-			tempEffect4.isMagic=true;
-			tempEffect4.isPhysics=false;
+			var tempEffect3=new AddBuffEffect();
+			tempEffect3.target=0;
+			tempEffect3.isAttack=false;
+			tempEffect3.isMagic=false;
+			tempEffect3.isPhysics=true;
+			tempEffect3.buffType="生死流转";
+			tempEffect3.buffDuration=2;
+			var tempEffect4=new SingleEffect();
+			tempEffect4.type="前摇";
 			effectList=[tempEffect0,tempEffect,tempEffect2,tempEffect3,tempEffect4];
 		}
 	}

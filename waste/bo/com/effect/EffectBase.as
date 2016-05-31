@@ -1,10 +1,11 @@
 ﻿package com.effect
 {
 	import com.gameObject.*;
+	import com.system.*;
 	
 	public class EffectBase
 	{
-		private var effectType:String="EffectBase";
+		public var effectType:String="EffectBase";
 		public var target:int=0;
 		public var isAttack:Boolean=false;//source先结算,attack后结算.
 		public var isMagic:Boolean=false;
@@ -20,7 +21,7 @@
 			
 		}
 		
-		public function deal(target:PlayerBase,...args):void
+		public function deal(target:PlayerBase,action:ActionBase,...args):void
 		{
 			
 		}

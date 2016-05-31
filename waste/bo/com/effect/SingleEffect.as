@@ -1,8 +1,11 @@
 ﻿package com.effect
 {
 	public class SingleEffect extends EffectBase
-	{
-		private var effectType:String="SingleEffect";
+	{		
+		public function SingleEffect()
+		{
+			effectType="SingleEffect";
+		}
 		
 		public function set type(s:String):void
 		{
