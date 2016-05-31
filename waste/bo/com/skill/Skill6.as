@@ -36,7 +36,7 @@
 			var tempEffect4=new AddBuffEffect();
 			tempEffect4.target=0;
 			tempEffect4.isAttack=false;
-			tempEffect4.buffType=2;
+			tempEffect4.buffType="魔免";
 			tempEffect4.buffDuration=1;
 			effectList=[tempEffect0,tempEffect,tempEffect2,tempEffect3,tempEffect4];
 		}

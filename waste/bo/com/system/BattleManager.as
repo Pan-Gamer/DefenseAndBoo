@@ -2,6 +2,7 @@
 {
 	import com.gameObject.*;
 	import com.skill.*;
+	import com.effect.*;
 	
 	public class BattleManager
 	{
@@ -98,6 +99,11 @@
 			}
 			p0=getAttackPriority(currentAction0);
 			p1=getAttackPriority(currentAction1);
+			//todo 要处理连击,得把4个速度都过一遍.
+			for(var i=4;i>=0;i--)
+			{
+				
+			}
 			if(p0>p1)
 			{
 				dealActionAttack(currentAction0);
@@ -212,9 +218,9 @@
 			return 0;
 		}
 		
+		//@Deprecated
 		protected function getAttackPriority(a:ActionBase):int
 		{
-			
 			if(a.containEffect("先攻"))
 			{
 				return 3;
@@ -228,6 +234,18 @@
 				return 0;
 			}
 			return 2;
+		}
+		
+		/*
+		* 给定一个速度,判断该攻击是否发生在此速度
+		*/
+		protected function wetherAttackPriority(i:int,e:EffectBase):Boolean
+		{
+			if(i==e.attackSpeed)
+			{
+				return true;
+			}
+			return false;
 		}
 		
 		public function startPhrase():void
