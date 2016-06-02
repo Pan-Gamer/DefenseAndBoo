@@ -2,6 +2,7 @@
 {
 	import com.gameObject.*;
 	import com.system.*;
+	import com.skill.*;
 	/*
 	* 基础攻击
 	*/
@@ -17,6 +18,7 @@
 		public override function deal(target:PlayerBase,action:ActionBase,...args):void
 		{
 			var attackSuccess:Boolean=true;
+			var tempPoint:int=point;
 			if(isMagic)
 			{
 				if(target.containBuff("魔免") || (target.containBuff("防")&&(!action.containEffect("破防"))))
@@ -34,8 +36,32 @@
 			}
 			if(attackSuccess)
 			{
-				target.hp-=point;
+				if(target.containBuff("防止伤害"))
+				{
+					var tempBuff:BuffBase=target.getBuffByType("防止伤害");
+					if(tempBuff.stackCount>0)
+					{
+						tempBuff.stackCount--;
+						if(tempBuff.stackCount==0)
+						{
+							target.removeBuffByType("防止伤害");
+						}
+						attackSuccess=false;
+					}
+				}
+			}
+			if(attackSuccess)
+			{
+				target.hp-=tempPoint;
 				target.hasAttacked=true;
+				if(tempPoint>0 && action.containEffect("系命"))
+				{
+					action.hostPlayer.hp+=tempPoint;
+				}
+			}
+			if(attackSuccess)
+			{
+				action.attackSuccess=true;
 			}
 		}
 	}

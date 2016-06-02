@@ -22,6 +22,12 @@
 		
 		public function addSkillToAction(i:int=0,skill:SkillBase=null):Boolean
 		{
+			if(!skill.hasCoolDown)
+			{
+				traceLog(i,"技能还没有准备好");
+				return false;
+			}
+			//生成action
 			var action=new ActionBase();
 			action.host=i; 
 			action.hostPlayer=i==0?player0:player1;
@@ -55,8 +61,12 @@
 			{
 				traceLog(0,"使用了"+currentAction0.currentSkill.name);
 				traceLog(1,"使用了"+currentAction1.currentSkill.name);
+				//技能进入cd
+				currentAction0.currentSkill.setCoolDown("start");
+				currentAction1.currentSkill.setCoolDown("start");
 				deal();
 				endPhrase();
+				startPhrase();
 			}
 		}
 		
@@ -149,8 +159,9 @@
 				{
 					continue;
 				}
-				var tempTarget:PlayerBase=(action.host^tempEffect.target)==0?player0:player1;//按位xor
-				tempEffect.deal(tempTarget,action);
+				/*var tempTarget:PlayerBase=(action.host^tempEffect.target)==0?player0:player1;//按位xor
+				tempEffect.deal(tempTarget,action);*/
+				dealEffect(tempEffect,action);
 				refreshUI();
 			}
 		}
@@ -178,11 +189,19 @@
 					{
 						continue;
 					}
-					var tempTarget:PlayerBase=(action.host^tempEffect.target)==0?player0:player1;//按位xor
-					tempEffect.deal(tempTarget,action);
+					/*var tempTarget:PlayerBase=(action.host^tempEffect.target)==0?player0:player1;//按位xor
+					tempEffect.deal(tempTarget,action,this.dealActionAttack);*/
+					dealEffect(tempEffect,action);
 					refreshUI();
 				}
 			}
+		}
+		
+		//work mark
+		protected function dealEffect(currentEffect:EffectBase,action:ActionBase)
+		{
+			var tempTarget:PlayerBase=(action.host^currentEffect.target)==0?player0:player1;//按位xor
+			currentEffect.deal(tempTarget,action,this.dealEffect);
 		}
 		
 		//状态检测.死亡等.
@@ -272,20 +291,26 @@
 		
 		public function startPhrase():void
 		{
-			//todo cd走一回合
+			turnCount++;
+			traceLog(-1,"  第"+turnCount+"回合开始");
+			player0.turnStart();
+			player1.turnStart();
+			player0.startTick();
+			player1.startTick();
 			refreshUI();
 		}
 		
 		public function endPhrase():void
 		{
+			player0.endTick();
+			player1.endTick();
 			currentAction0=null;
 			currentAction1=null;
-			traceLog(-1,"  第"+turnCount+"回合结束");
-			turnCount++;
 			player0.buffFade();
 			player1.buffFade();
 			player0.hasAttacked=false;
 			player1.hasAttacked=false;
+			traceLog(-1,"  第"+turnCount+"回合结束");
 			refreshUI("endTurn");
 		}
 		

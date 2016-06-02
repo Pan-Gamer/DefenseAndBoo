@@ -25,6 +25,14 @@
 				case "生死流转":
 					result=new Buff3();
 					break;
+				case 4:
+				case "防止伤害":
+					result=new Buff4();
+					break;
+				case 5:
+				case "待机人偶":
+					result=new Buff5();
+					break;
 				default:
 					result=new SingleBuff();
 					break;

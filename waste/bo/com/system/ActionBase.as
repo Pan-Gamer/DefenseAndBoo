@@ -10,8 +10,11 @@
 		public var host:int=0;
 		public var hostPlayer:PlayerBase=null;
 		
+		//临时数据
 		public var hasCountered:Boolean=false;//是否被康
 		public var hasAttackCountered:Boolean=false;//是否被打康
+		//次级临时数据
+		public var attackSuccess:Boolean=false;
 		
 		public function get currentSkill():SkillBase
 		{

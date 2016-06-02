@@ -22,13 +22,21 @@
 			
 		}
 		
-		public function initTest():void
+		public function initTest(classIndex:int=0):void
 		{
 			hpDefault=10;
 			hpMax=20;
 			mpDefault=0;
 			mpMax=10;
-			skillList=[new Skill0(),new Skill1(),new Skill2(),new Skill3(),new Skill4(),new Skill5(),new Skill6(),new Skill7(),new Skill10(),new Skill11()];
+			switch(classIndex)
+			{
+				case 0:
+					skillList=[new Skill0(),new Skill1(),new Skill2(),new Skill3(),new Skill4(),new Skill5(),new Skill6(),new Skill7(),new Skill8(),new Skill9(),new Skill10(),new Skill11(),new Skill12()];
+					break;
+				case 2:
+					skillList=[new Skill_2_0(),new Skill_2_1(),new Skill2(),new Skill3(),new Skill4(),new Skill_2_2(),new Skill_2_3(),new Skill_2_4(),new Skill_2_5()];
+					break;
+			}
 			
 			init();
 		}
@@ -104,6 +112,36 @@
 					buffList.splice(i,1);
 				}
 			}
+		}
+		
+		/*
+		* 回合开始,cd走一回合,等等
+		*/
+		public function turnStart():void
+		{
+			for each(var tempSkill:SkillBase in skillList)
+			{
+				if(tempSkill.coolDownMax>0 && tempSkill.coolDown>0)
+				{
+					tempSkill.setCoolDown("fade",-1);
+				}
+			}
+		}
+		
+		/*
+		* 回合开始的各种触发和tick
+		*/
+		public function startTick():void
+		{
+			
+		}
+		
+		/*
+		* 回合结束的各种触发和tick
+		*/
+		public function endTick():void
+		{
+			
 		}
 	}
 }
