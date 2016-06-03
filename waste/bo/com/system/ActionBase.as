@@ -15,6 +15,8 @@
 		public var hasAttackCountered:Boolean=false;//是否被打康
 		//次级临时数据
 		public var attackSuccess:Boolean=false;
+		public var dynamicPointX:int=0;
+		public var dynamicPointY:int=0;
 		
 		public function get currentSkill():SkillBase
 		{

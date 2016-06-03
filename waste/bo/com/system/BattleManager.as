@@ -197,11 +197,27 @@
 			}
 		}
 		
-		//work mark
-		protected function dealEffect(currentEffect:EffectBase,action:ActionBase)
+		public function dealBuff(currentBuff:BuffBase,target:PlayerBase):void
+		{
+			if(currentBuff.hasOwnProperty("tickEffectList"))
+			{
+				for(var i=0;i<currentBuff["tickEffectList"].length;i++)
+				{
+					var tempEffect=currentBuff["tickEffectList"][i];
+					dealEffect2(tempEffect,currentBuff,target);
+				}
+			}
+		}
+		
+		protected function dealEffect(currentEffect:EffectBase,action:ActionBase):void
 		{
 			var tempTarget:PlayerBase=(action.host^currentEffect.target)==0?player0:player1;//按位xor
 			currentEffect.deal(tempTarget,action,this.dealEffect);
+		}
+		
+		protected function dealEffect2(currentEffect:EffectBase,buff:BuffBase,target:PlayerBase):void
+		{
+			currentEffect.deal(target,null,this.dealEffect,buff);
 		}
 		
 		//状态检测.死亡等.
@@ -340,12 +356,28 @@
 		
 		public function costTest(i:int,s:SkillBase):Boolean
 		{
+			var result:Boolean=true;
 			var tempPlayer:PlayerBase=i==0?player0:player1;
 			if(tempPlayer.mp>=s.cost)
 			{
-				return true;
+				result=true;
+				if(s.hasOtherCost())
+				{
+					for(var i=0;i<s.otherCost.length;i++)
+					{
+						var tempJudge=s.otherCost[i];
+						if(!tempJudge.judge(s,tempPlayer))
+						{
+							result=false;
+						}
+					}
+				}
 			}
-			return false;
+			else
+			{
+				result=false;
+			}
+			return result;
 		}
 	}
 }

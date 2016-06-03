@@ -17,6 +17,8 @@
 		
 		public var hasAttacked:Boolean=false;
 		
+		public var cb_dealBuff:Function=null;
+		
 		public function PlayerBase()
 		{
 			
@@ -34,7 +36,7 @@
 					skillList=[new Skill0(),new Skill1(),new Skill2(),new Skill3(),new Skill4(),new Skill5(),new Skill6(),new Skill7(),new Skill8(),new Skill9(),new Skill10(),new Skill11(),new Skill12()];
 					break;
 				case 2:
-					skillList=[new Skill_2_0(),new Skill_2_1(),new Skill2(),new Skill3(),new Skill4(),new Skill_2_2(),new Skill_2_3(),new Skill_2_4(),new Skill_2_5()];
+					skillList=[new Skill_2_0(),new Skill_2_1(),new Skill2(),new Skill3(),new Skill4(),new Skill_2_2(),new Skill_2_3(),new Skill_2_4(),new Skill_2_5(),new Skill_2_6(),new Skill_2_7(),new Skill_2_8(),new Skill_2_9(),new Skill_2_10()];
 					break;
 			}
 			
@@ -141,7 +143,17 @@
 		*/
 		public function endTick():void
 		{
-			
+			for(var i=0;i<buffList.length;i++)
+			{
+				var tempBuff=buffList[i];
+				if(tempBuff is TurnEndTickBuff)
+				{
+					if(null!=cb_dealBuff)
+					{
+						cb_dealBuff(tempBuff,this);
+					}
+				}
+			}
 		}
 	}
 }

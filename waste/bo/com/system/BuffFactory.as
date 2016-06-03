@@ -33,6 +33,10 @@
 				case "待机人偶":
 					result=new Buff5();
 					break;
+				case "_2_9":
+				case "曲折的诅咒":
+					result=new Buff_2_9();
+					break;
 				default:
 					result=new SingleBuff();
 					break;

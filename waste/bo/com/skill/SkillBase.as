@@ -6,6 +6,7 @@
 		public var typeList:Array=[];//一堆没太大意义的tag
 		public var effectList:Array=[];
 		public var m_cost:int=0;
+		public var m_otherCost:Array=null;
 		public var coolDown:int=-1;//冷却时间
 		public var coolDownMax:int=-1;
 		public var coolDownCharge:int=-1;//充能.如果设置了ChargeMax,则charge至少为1才能使用;如果未设置,则只需判断coolDown==0.
@@ -19,6 +20,16 @@
 		public function get cost():int
 		{
 			return m_cost;
+		}
+		
+		public function hasOtherCost():Boolean
+		{
+			return !(m_otherCost==null);
+		}
+		
+		public function get otherCost():Array
+		{
+			return m_otherCost;
 		}
 		
 		public function getActionSkill(...args):SkillBase

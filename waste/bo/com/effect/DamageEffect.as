@@ -3,6 +3,7 @@
 	import com.gameObject.*;
 	import com.system.*;
 	import com.skill.*;
+	import com.util.*;
 	/*
 	* 基础攻击
 	*/
@@ -19,16 +20,24 @@
 		{
 			var attackSuccess:Boolean=true;
 			var tempPoint:int=point;
+			if(point==ConstantUtil.DYNAMIC_POINT_X)
+			{
+				tempPoint=action.dynamicPointX;
+			}
+			else if(point==ConstantUtil.DYNAMIC_POINT_Y)
+			{
+				tempPoint=action.dynamicPointY;
+			}
 			if(isMagic)
 			{
-				if(target.containBuff("魔免") || (target.containBuff("防")&&(!action.containEffect("破防"))))
+				if(target.containBuff("魔免") || (target.containBuff("防")&&(null==action || !action.containEffect("破防"))))
 				{
 					attackSuccess=false;
 				}
 			}
 			if(isPhysics)
 			{
-				if(target.containBuff("闪")&&(!action.containEffect("必中")) || (target.containBuff("防")&&(!action.containEffect("破防"))))
+				if(target.containBuff("闪")&&(!action.containEffect("必中")) || (target.containBuff("防")&&(null==action || !action.containEffect("破防"))))
 				{
 					//被闪避
 					attackSuccess=false;
@@ -54,14 +63,17 @@
 			{
 				target.hp-=tempPoint;
 				target.hasAttacked=true;
-				if(tempPoint>0 && action.containEffect("系命"))
+				if(null!=action && tempPoint>0 && action.containEffect("系命"))
 				{
 					action.hostPlayer.hp+=tempPoint;
 				}
 			}
 			if(attackSuccess)
 			{
-				action.attackSuccess=true;
+				if(null!=action)
+				{
+					action.attackSuccess=true;
+				}
 			}
 		}
 	}

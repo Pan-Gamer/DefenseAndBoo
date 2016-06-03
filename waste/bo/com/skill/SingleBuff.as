@@ -1,7 +1,7 @@
 ﻿package com.skill
 {
 	public class SingleBuff extends BuffBase
-	{		
+	{
 		public function set type(s:String):void
 		{
 			buffType=s;
