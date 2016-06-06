@@ -7,6 +7,7 @@
 		public static function getNewBuff(index:String):BuffBase
 		{
 			var result:BuffBase=null;
+			var tempBuff;
 			switch(index)
 			{
 				case 0:
@@ -36,6 +37,22 @@
 				case "_2_9":
 				case "曲折的诅咒":
 					result=new Buff_2_9();
+					break;
+				case "_3_0":
+				case "居合剑":
+					return new Buff_3_0();
+					break;
+				case "收刀入鞘":
+					tempBuff=new SingleBuff();
+					tempBuff.type="收刀入鞘";
+					tempBuff.name="收刀入鞘";
+					return tempBuff;
+					break;
+				case "刀光一闪":
+					tempBuff=new SingleBuff();
+					tempBuff.type="刀光一闪";
+					tempBuff.name="刀光一闪";
+					return tempBuff;
 					break;
 				default:
 					result=new SingleBuff();

@@ -47,7 +47,7 @@
 			tempEffect3_1.buffType="待机人偶";
 			tempEffect3_1.buffDuration=-1;
 			var tempEffect3=new ConditionEffect();
-			tempEffect3.target=1;//判定对象为action时,target无意义,
+			tempEffect3.target=0;
 			tempEffect3.isAttack=true;//视情况而定,通常和触发的effect保持一致即可.
 			tempEffect3.isMagic=false;
 			tempEffect3.isPhysics=false;

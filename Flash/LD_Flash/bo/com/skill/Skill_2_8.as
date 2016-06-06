@@ -3,7 +3,7 @@
 	import com.effect.*;
 	/*
 	* 萌萌千枪
-	* 4费,-3人偶,4物理攻击,不被被打康.
+	* 4费,-3人偶,缓攻,4物理攻击,不被被打康.
 	*/
 	public class Skill_2_8 extends SkillBase
 	{

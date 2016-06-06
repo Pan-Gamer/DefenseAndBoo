@@ -11,6 +11,8 @@
 	public class ConditionEffect extends EffectBase
 	{
 		public var conditionType:String="";
+		public var conditionType2:String="";//如果需要,填入
+		public var conditionCount:int=1;//如果需要,填入
 		public var successEffectList:Array=[];
 		public var failEffectList:Array=[];
 		
@@ -20,36 +22,68 @@
 		}
 		
 		public override function deal(target:PlayerBase,action:ActionBase,...args):void
-		{
+		{//args[回调,buff,hostaction,enermyaction]
 			var dealEffectCallback=args[0] as Function;
 			if(null==dealEffectCallback)
 			{
 				//error
 				return;
 			}
-			if(condition(target,action))
+			if(condition(target,action,args[2],args[3]))
 			{
 				for(var i=0;i<successEffectList.length;i++)
 				{
-					dealEffectCallback(successEffectList[i],action);
+					if(null!=action)
+					{
+						dealEffectCallback(successEffectList[i],action);
+					}
+					else
+					{
+						dealEffectCallback(successEffectList[i],args[2]);//姑且对付一下
+					}
 				}
 			}
 			else
 			{
 				for(i=0;i<failEffectList.length;i++)
 				{
-					dealEffectCallback(failEffectList[i],action);
+					if(null!=action)
+					{
+						dealEffectCallback(failEffectList[i],action);
+					}
+					else
+					{
+						dealEffectCallback(failEffectList[i],args[2]);//姑且对付一下
+					}
 				}
 			}
-			
 		}
 		
 		private function condition(target:PlayerBase,action:ActionBase,...args):Boolean
 		{
+			var aimAction:ActionBase;
+			switch(this.target)
+			{
+				case 0:
+					aimAction=args[0];
+					break;
+				case 1:
+					aimAction=args[1];
+					break;
+				default:
+					aimAction=action;
+					break;
+			}
 			switch(conditionType)
 			{
 				case "actionAttackSuccess":
-					return action.attackSuccess;
+					return aimAction.attackSuccess;
+					break;
+				case "hasAttackAction":
+					return aimAction.hasAttackAction;
+					break;
+				case "buff":
+					return (target.getBuffCount(conditionType2)>=conditionCount);
 					break;
 			}
 			return false;

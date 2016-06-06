@@ -192,6 +192,7 @@
 					/*var tempTarget:PlayerBase=(action.host^tempEffect.target)==0?player0:player1;//按位xor
 					tempEffect.deal(tempTarget,action,this.dealActionAttack);*/
 					dealEffect(tempEffect,action);
+					action.hasAttackAction=true;
 					refreshUI();
 				}
 			}
@@ -212,12 +213,17 @@
 		protected function dealEffect(currentEffect:EffectBase,action:ActionBase):void
 		{
 			var tempTarget:PlayerBase=(action.host^currentEffect.target)==0?player0:player1;//按位xor
-			currentEffect.deal(tempTarget,action,this.dealEffect);
+			var hostAction:ActionBase=action.host==0?currentAction0:currentAction1;//通常hostaction就是上面传进来的action
+			var enermyAction:ActionBase=action.host==0?currentAction1:currentAction0;
+			currentEffect.deal(tempTarget,action,this.dealEffect,null,hostAction,enermyAction);//参数规则:目标,父级action,回调,buff(如果有的话),己方本回合action,对方本回合action,
 		}
 		
 		protected function dealEffect2(currentEffect:EffectBase,buff:BuffBase,target:PlayerBase):void
 		{
-			currentEffect.deal(target,null,this.dealEffect,buff);
+			//此处target是承受buff的对象,己方敌方action都是以此为基础判别
+			var hostAction:ActionBase=target==player0?currentAction0:currentAction1;
+			var enermyAction:ActionBase=target==player0?currentAction1:currentAction0;
+			currentEffect.deal(target,null,this.dealEffect,buff,hostAction,enermyAction);//嵌套该调dealEffect还是dealEffect2未确定
 		}
 		
 		//状态检测.死亡等.

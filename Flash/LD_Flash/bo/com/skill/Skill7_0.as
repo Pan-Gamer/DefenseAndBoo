@@ -2,7 +2,7 @@
 {
 	import com.effect.*;
 	
-	public class Skill7_0 extends SkillBase
+	public class Skill7_0 extends ChildSkill
 	{
 		public function Skill7_0()
 		{

@@ -2,16 +2,16 @@
 {
 	import com.effect.*;
 	
-	public class Skill_2_3 extends SkillBase
+	public class Skill7_2 extends ChildSkill
 	{
-		public function Skill_2_3()
+		public function Skill7_2()
 		{
 			initTest();
 		}
 		
 		public function initTest():void
 		{
-			name="冷峻的罗马尼西亚人偶";
+			name="生死流转2";
 			typeList=[];
 			cost=2;
 			
@@ -27,21 +27,22 @@
 			tempEffect.isMagic=false;
 			tempEffect.isPhysics=true;
 			tempEffect.point=2;
-			tempEffect.attackSpeed=1;
-			var tempEffect2=new SingleEffect();
-			tempEffect2.type="缓攻";
-			var tempEffect3=new SingleEffect();
-			tempEffect3.type="前摇";
+			tempEffect.attackSpeed=2;
+			var tempEffect3=new RemoveBuffEffect();
+			tempEffect3.target=0;
+			tempEffect3.isAttack=false;
+			tempEffect3.isMagic=false;
+			tempEffect3.isPhysics=false;
+			tempEffect3.buffType="生死流转";
+			tempEffect3.point=3;
 			var tempEffect4=new AddBuffEffect();
 			tempEffect4.target=0;
 			tempEffect4.isAttack=false;
 			tempEffect4.isMagic=false;
 			tempEffect4.isPhysics=false;
-			tempEffect4.buffType="待机人偶";
-			tempEffect4.buffDuration=-1;
-			var tempEffect5=new SingleEffect();
-			tempEffect5.type="系命";
-			effectList=[tempEffect0,tempEffect,tempEffect2,tempEffect3,tempEffect4,tempEffect5];
+			tempEffect4.buffType="魔免";
+			tempEffect4.buffDuration=1;
+			effectList=[tempEffect0,tempEffect,tempEffect3,tempEffect4];
 		}
 	}
 }
